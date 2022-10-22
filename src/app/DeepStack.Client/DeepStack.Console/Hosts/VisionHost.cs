@@ -1,5 +1,6 @@
 ﻿using DeepStack.Client;
 using DeepStack.Console.Options;
+using ExifLibrary;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -42,28 +43,14 @@ namespace DeepStack.Console.Hosts
 
                 var client = new DeepStackClient(_httpClient, this.Options.BaseUrl);
 
-                var sw = new Stopwatch();
-                sw.Start();
-                var response = await client.DetectObjects(this.Options.File, cancellationToken);
-                sw.Stop();
 
 
-                if (client.LastResponseHeaders.Contains("X-Upstream"))
-                {
-                    var upstream = client.LastResponseHeaders.GetValues("X-Upstream");
-                }
+                await RunForFile(client, this.Options.File, cancellationToken);
 
-                if (response.Success)
-                {
-                    System.Console.ForegroundColor = ConsoleColor.Green;
-                }
-                else
-                {
-                    System.Console.ForegroundColor = ConsoleColor.Yellow;
-                }
+            }
+            else if (!string.IsNullOrEmpty(this.Options.Directory))
+            {
 
-                System.Console.Write(this.Options.File + " -> ");
-                System.Console.WriteLine(response.ToString() + $":  {sw.ElapsedMilliseconds} ms");
 
 
             }
@@ -78,10 +65,60 @@ namespace DeepStack.Console.Hosts
 
         }
 
+
+        async private Task RunForFile(DeepStackClient client, string filepath, CancellationToken cancellationToken)
+        {
+
+            var sw = new Stopwatch();
+            sw.Start();
+            var response = await client.DetectObjects(this.Options.File, cancellationToken);
+            sw.Stop();
+
+
+          
+
+            if (this.Options.UpdateExifData && response.Success)
+            {
+                // updates image EXIF data with the results
+
+                var file = ImageFile.FromFile(filepath);
+                file.Properties.Set(ExifTag.WindowsTitle, response.ToString());
+                file.Properties.Set(ExifTag.WindowsSubject, response.ToString());
+                file.Save(filepath);
+            }
+
+
+            if (client.LastResponseHeaders.Contains("X-Upstream"))
+            {
+                var upstream = client.LastResponseHeaders.GetValues("X-Upstream");
+            }
+
+            if (response.Success)
+            {
+                System.Console.ForegroundColor = ConsoleColor.Green;
+            }
+            else
+            {
+                // no objects detected
+                System.Console.ForegroundColor = ConsoleColor.Yellow;
+            }
+
+
+            System.Console.Write(this.Options.File + " -> ");
+            System.Console.WriteLine(response.ToString() + $":  {sw.ElapsedMilliseconds} ms");
+
+        }
+
+
+
+
         async public Task StopAsync(CancellationToken cancellationToken)
         {
             
 
         }
+
+
+
     }
 }

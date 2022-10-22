@@ -22,7 +22,7 @@ namespace DeepStack.Client
 
         public override string ToString()
         {
-            return $"{Label}:{(int)Math.Round(Confidence * 100, 0)}";
+            return $"{Label}:{(int)Math.Round(Confidence * 100, 0)}%";
         }
 
     }

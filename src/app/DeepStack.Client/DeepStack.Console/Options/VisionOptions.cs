@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace DeepStack.Console.Options
@@ -26,7 +27,8 @@ namespace DeepStack.Console.Options
         public string Directory { get; set; }
 
 
-
+        [Option(HelpText = "Specifies whether or not the EXIF data with the result.")]
+        public bool UpdateExifData { get; set; } = false;
 
     }
 }
