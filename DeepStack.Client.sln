@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepStack.Client", "DeepStack.Client\DeepStack.Client.csproj", "{96F06655-6EDF-4D1D-8C35-A152F29F66A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepStack.Client", "src\app\DeepStack.Client\DeepStack.Client.csproj", "{96F06655-6EDF-4D1D-8C35-A152F29F66A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepStack.Console", "DeepStack.Console\DeepStack.Console.csproj", "{103336EF-6F29-4A84-94D0-F0702E2E2607}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepStack.Console", "src\app\DeepStack.Console\DeepStack.Console.csproj", "{103336EF-6F29-4A84-94D0-F0702E2E2607}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
