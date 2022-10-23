@@ -28,5 +28,12 @@ jobs:
 #      run: dotnet build --no-restore
 #    - name: Test
 #      run: dotnet test --no-build --verbosity normal
-    - name: Package nuget
+    - name: Create Nuget Package
       run: dotnet pack $env:Project_Path --configuration Release
+      
+    - name: Add Nuget Source
+      run: dotnet nuget add source --username stephenrobi --password ${{ secrets.PUBLISH_PACKAGE_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/stephenrobi/index.json"
+      
+    - name: Publish Nuget Package
+      run: dotnet nuget push "bin/Release/*nupkg" --source "github"
+      
