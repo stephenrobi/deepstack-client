@@ -9,4 +9,13 @@
     <PackageReference Include="Flurl.Http" Version="3.2.4" />
   </ItemGroup>
 
+	<PropertyGroup>
+		<PackageId>DeepStack.Client</PackageId>
+		<Version>1.0.0</Version>
+		<Authors>stephenrobi</Authors>
+		<Company>stephenrobi</Company>
+		<PackageDescription>A simple DeepStack Server API client.</PackageDescription>
+		<RepositoryUrl>https://github.com/stephenrobi/deepstack-client</RepositoryUrl>
+	</PropertyGroup>
+
 </Project>
